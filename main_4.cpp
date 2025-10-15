@@ -26,7 +26,6 @@ void delete_matrix(int **matrix, int rows) {
 
 void print_matrix(int **matrix, int rows, int cols) {
     std::cout << "matrix" << std::endl;
-
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             std::cout << matrix[i][j] << "\t";
@@ -39,22 +38,21 @@ int find_max_row(int **matrix, int rows, int cols) {
     int max_value = matrix[0][0];
     int max_row = 0;
 
-    for (int i = 1; i < rows; i++) {
-        for (int j = 1; j < cols; j++) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
             if (matrix[i][j] > max_value) {
                 max_value = matrix[i][j];
                 max_row = i;
             }
         }
     }
-
     return max_row;
 }
 
 int **remove_row(int **matrix, int &rows, int cols, int row_to_remove) {
     int **new_matrix = new int *[rows - 1];
-
     int new_row = 0;
+
     for (int i = 0; i < rows; i++) {
         if (i != row_to_remove) {
             new_matrix[new_row] = new int[cols];
@@ -83,12 +81,18 @@ int main() {
 
     int **matrix = create_matrix(ROWS, COLS);
     write_matrix(matrix, ROWS, COLS);
+
+    std::cout << "\nИсходная матрица:" << std::endl;
     print_matrix(matrix, ROWS, COLS);
 
     int row_to_remove = find_max_row(matrix, ROWS, COLS);
-    remove_row(matrix, ROWS, COLS, row_to_remove);
+    std::cout << "\nУдаляем строку " << row_to_remove << " с максимальным элементом" << std::endl;
 
+    matrix = remove_row(matrix, ROWS, COLS, row_to_remove);
+
+    std::cout << "\nМатрица после удаления строки:" << std::endl;
     print_matrix(matrix, ROWS, COLS);
+
     delete_matrix(matrix, ROWS);
     return 0;
 }

@@ -2,9 +2,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#ifdef _WIN32
-#include <windows.h>
-#endif
 
 struct Tour {
     Tour(std::string country, int days, std::string type, double price)
@@ -28,6 +25,16 @@ std::vector<Tour> find_tours_by_country(std::vector<Tour> tours, std::string cou
 }
 
 void file_preparation(std::string file_path = "files/test2.txt") {
+    std::ifstream in(file_path);
+    if (in.is_open()) {
+        in.seekg(0, std::ios::end);
+        if (in.tellg() != 0) {
+            in.close();
+            return;
+        }
+        in.close();
+    }
+
     std::vector<Tour> tours{
         Tour{"Turkey", 10, "relax", 60000},        Tour{"Egypt", 12, "relax", 75000},
         Tour{"Turkey", 7, "excursion", 45000},     Tour{"Italy", 9, "gastronomic", 180000},
