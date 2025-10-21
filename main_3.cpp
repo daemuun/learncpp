@@ -14,7 +14,7 @@ int main() {
     std::cout << std::endl;
 
     int length = n * m;
-    int *arr = new int[length];
+    int* arr = new int[length];
     for (int i = 0; i < length; i++) {
         std::cout << "Введите элемент номер " << i << ": ";
         std::cin >> arr[i];
@@ -22,7 +22,7 @@ int main() {
     std::cout << std::endl;
 
     // динамически создаем двумерный массив
-    int **matrix = new int *[n];
+    int** matrix = new int*[n];
     for (int i = 0; i < n; i++) {
         matrix[i] = new int[m];
     }
@@ -53,8 +53,8 @@ int main() {
     int min_value = matrix[0][0];
     int min_value_row = 0;
 
-    for (int i = 1; i < n; i++) {
-        for (int j = 1; j < n; j++) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
             if (matrix[i][j] < min_value) {
                 min_value = matrix[i][j];
                 min_value_row = i;
