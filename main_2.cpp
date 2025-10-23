@@ -14,7 +14,7 @@ int main() {
     std::cin >> n;
 
     // высвобождаем память для массива с размером n
-    double *a = new double[n];
+    double* a = new double[n];
 
     // заполняем массив ранддомными значениями
     for (int i = 0; i < n; i++) {

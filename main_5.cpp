@@ -1,14 +1,15 @@
 #include <iostream>
+#include <limits> 
 
-int **create_matrix(int rows, int cols) {
-    int **matrix = new int *[rows];
+int** create_matrix(int rows, int cols) {
+    int** matrix = new int*[rows];
     for (int i = 0; i < rows; i++) {
         matrix[i] = new int[cols];
     }
     return matrix;
 }
 
-void write_matrix(int **matrix, int rows, int cols) {
+void write_matrix(int** matrix, int rows, int cols) {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             std::cout << "matrix[" << i << "][" << j << "] = ";
@@ -17,14 +18,14 @@ void write_matrix(int **matrix, int rows, int cols) {
     }
 }
 
-void delete_matrix(int **matrix, int rows) {
+void delete_matrix(int** matrix, int rows) {
     for (int i = 0; i < rows; i++) {
         delete[] matrix[i];
     }
     delete[] matrix;
 }
 
-void print_matrix(int **matrix, int rows, int cols) {
+void print_matrix(int** matrix, int rows, int cols) {
     std::cout << "matrix" << std::endl;
 
     for (int i = 0; i < rows; i++) {
@@ -35,7 +36,7 @@ void print_matrix(int **matrix, int rows, int cols) {
     }
 }
 
-int find_max_col(int **matrix, int rows, int cols) {
+int find_max_col(int** matrix, int rows, int cols) {
     int max_value = matrix[0][0];
     int max_col = 0;
 
@@ -51,8 +52,8 @@ int find_max_col(int **matrix, int rows, int cols) {
     return max_col;
 }
 
-int **remove_col(int **matrix, int rows, int &cols, int col_to_remove) {
-    int **new_matrix = new int *[rows];
+int** remove_col(int** matrix, int rows, int& cols, int col_to_remove) {
+    int** new_matrix = new int*[rows];
 
     for (int i = 0; i < rows; i++) {
         new_matrix[i] = new int[cols - 1];
@@ -71,17 +72,33 @@ int **remove_col(int **matrix, int rows, int &cols, int col_to_remove) {
     return new_matrix;
 }
 
+int input_int(const std::string& message) {
+    int value{};
+    while (true) {
+        std::cout << message;
+        std::cin >> value;
+
+        if (std::cin.fail()) {
+            std::cin.clear();  // сбрасываем флаг ошибки
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // очищаем буфер
+            std::cout << "Ошибка! Пожалуйста, введите целое число." << std::endl;
+        } else {
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // очищаем буфер
+            if (value <= 0) {
+                std::cout << "Ошибка! Число должно быть положительным." << std::endl;
+            } else {
+                return value;
+            }
+        }
+    }
+}
+
 int main() {
     setlocale(LC_ALL, "ru_RU.UTF8");
-    int ROWS;
-    int COLS;
+    int ROWS = input_int("Введите количество строк: ");
+    int COLS = input_int("Введите количество столбцов: ");
 
-    std::cout << "Введите количество строк: ";
-    std::cin >> ROWS;
-    std::cout << "Введите количество столбцов: ";
-    std::cin >> COLS;
-
-    int **matrix = create_matrix(ROWS, COLS);
+    int** matrix = create_matrix(ROWS, COLS);
     write_matrix(matrix, ROWS, COLS);
     print_matrix(matrix, ROWS, COLS);
 
